@@ -1,15 +1,42 @@
 "use strict";
 
 const colors = [
-    '#FFFFFF',
-    '#2196F3',
-    '#4CAF50',
-    '#FF9800',
-    '#009688',
-    '#795548',
-  ];
+  '#FFFFFF',
+  '#2196F3',
+  '#4CAF50',
+  '#FF9800',
+  '#009688',
+  '#795548',
+];
+
+const refs = {
+  btnStart: document.querySelector("button[data-action='start']"),
+  btnStop: document.querySelector("button[data-action='stop']"),
+  body: document.querySelector("body"),
+  isActive: false,
+  colorBackgroundColor: null
+}
+const randomIntegerFromInterval = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+function startChangeColor() {
+  if (refs.isActive) {
+    return
+  }
+  refs.colorBackgroundColor = setInterval(() => {
+    refs.isActive = true;
+    refs.body.style.backgroundColor = colors[randomIntegerFromInterval(0, colors.length)];
+
+  }, 1000);
+
+}
+
+function stopInterval() {
+  clearInterval(refs.colorBackgroundColor);
+  refs.isActive = false;
+};
 
 
-  const randomIntegerFromInterval = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
+refs.btnStart.addEventListener("click", startChangeColor);
+refs.btnStop.addEventListener("click", stopInterval)
